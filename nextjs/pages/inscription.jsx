@@ -25,7 +25,6 @@ export default function SignIn() {
                     <button class='ui button' type='submit'>Valider</button>
                 </form>
             </div>
-
         </div>
       </main>
     )
