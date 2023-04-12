@@ -1,0 +1,9 @@
+/*!
+ * # Fomantic-UI 2.9.3-beta.16+7986b3f - Reset
+ * https://github.com/fomantic/Fomantic-UI/
+ *
+ *
+ * Released under the MIT license
+ * https://opensource.org/licenses/MIT
+ *
+ */*,::after,::before{box-sizing:inherit}html{box-sizing:border-box}input[type=email],input[type=password],input[type=search],input[type=text]{-webkit-appearance:none;-moz-appearance:none}

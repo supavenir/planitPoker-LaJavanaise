@@ -1,0 +1,175 @@
+/*!
+ * # Fomantic-UI 2.9.3-beta.16+7986b3f - Transition
+ * https://github.com/fomantic/Fomantic-UI/
+ *
+ *
+ * Released under the MIT license
+ * https://opensource.org/licenses/MIT
+ *
+ */
+
+
+/*******************************
+          Transitions
+*******************************/
+
+.transition {
+  animation-iteration-count: 1;
+  animation-duration: 300ms;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+}
+
+
+/*******************************
+            States
+*******************************/
+
+
+/* Animating */
+.animating.transition {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  visibility: visible !important;
+}
+
+/* Loading */
+.loading.transition {
+  position: absolute;
+  top: -99999px;
+  left: -99999px;
+}
+
+/* Hidden */
+.hidden.transition {
+  display: none;
+  visibility: hidden;
+}
+
+/* Visible */
+.visible.transition {
+  display: block !important;
+  visibility: visible !important;
+  
+/* backface-visibility: @backfaceVisibility;
+      transform: @use3DAcceleration; */
+}
+
+/* Disabled */
+.disabled.transition {
+  animation-play-state: paused;
+}
+
+
+/*******************************
+          Variations
+*******************************/
+
+.looping.transition {
+  animation-iteration-count: infinite;
+}
+
+/* Pulsating */
+.pulsating.transition {
+  animation-name: pulsating;
+  animation-duration: 2000ms;
+  box-shadow: 0 0 0 0 rgba(128, 128, 128, 0.5);
+}
+.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+}
+@keyframes pulsating {
+  100% {
+    box-shadow: 0 0 0 0.8rem rgba(255, 255, 255, 0);
+  }
+}
+.primary.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(33, 133, 208, 0.5);
+}
+.primary.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(84, 200, 255, 0.7);
+}
+.secondary.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(27, 28, 29, 0.5);
+}
+.secondary.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(84, 84, 84, 0.7);
+}
+.red.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(219, 40, 40, 0.5);
+}
+.red.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(255, 105, 94, 0.7);
+}
+.orange.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(242, 113, 28, 0.5);
+}
+.orange.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(255, 133, 27, 0.7);
+}
+.yellow.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(251, 189, 8, 0.5);
+}
+.yellow.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(255, 226, 31, 0.7);
+}
+.olive.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(181, 204, 24, 0.5);
+}
+.olive.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(217, 231, 120, 0.7);
+}
+.green.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(33, 186, 69, 0.5);
+}
+.green.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(46, 204, 64, 0.7);
+}
+.teal.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(0, 181, 173, 0.5);
+}
+.teal.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(109, 255, 255, 0.7);
+}
+.blue.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(33, 133, 208, 0.5);
+}
+.blue.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(84, 200, 255, 0.7);
+}
+.violet.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(100, 53, 201, 0.5);
+}
+.violet.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(162, 145, 251, 0.7);
+}
+.purple.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(163, 51, 200, 0.5);
+}
+.purple.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(220, 115, 255, 0.7);
+}
+.pink.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(224, 57, 151, 0.5);
+}
+.pink.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(255, 142, 223, 0.7);
+}
+.brown.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(165, 103, 63, 0.5);
+}
+.brown.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(214, 124, 28, 0.7);
+}
+.grey.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(118, 118, 118, 0.5);
+}
+.grey.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(220, 221, 222, 0.7);
+}
+.black.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(27, 28, 29, 0.5);
+}
+.black.inverted.pulsating.transition {
+  box-shadow: 0 0 0 0 rgba(84, 84, 84, 0.7);
+}

@@ -1,0 +1,36 @@
+/*!
+ * # Fomantic-UI 2.9.3-beta.16+7986b3f - Reset
+ * https://github.com/fomantic/Fomantic-UI/
+ *
+ *
+ * Released under the MIT license
+ * https://opensource.org/licenses/MIT
+ *
+ */
+
+
+/*******************************
+             Reset
+*******************************/
+
+
+/* Border-Box */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+html {
+  box-sizing: border-box;
+}
+
+/* iPad Input Shadows */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+input[type="password"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+/* mobile firefox too! */
+}
