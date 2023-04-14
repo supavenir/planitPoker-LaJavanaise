@@ -1,6 +1,15 @@
 import {Button, Checkbox, Form, Input, Select} from 'antd';
-const onFinish = (values) => {
+const onFinish = async (values) => {
     console.log('Success:', values);
+    const jsonData = JSON.stringify(values);
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonData,
+    };
+    const resUsers = await fetch('http://127.0.0.1:8090/api/rooms', options);
 };
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -78,7 +87,9 @@ const App = ({suites, teams, users}) => (
                    ]}
         >
             <Select placeholder="Nom du propriétaire." onChange={handleChange}>
-                <Select.Option value="erreur">Erreur</Select.Option>
+                {users.map((user) => (
+                    <Select.Option value={user.id}>{user.username}</Select.Option>
+                ))}
             </Select>
         </Form.Item>
 
