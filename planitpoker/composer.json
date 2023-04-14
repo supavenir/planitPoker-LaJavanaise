@@ -39,7 +39,9 @@
 		"phpmv/ubiquity-dev": "^0.1",
 		"phpmv/ubiquity-commands": "^0.0",
 		"phpmv/ubiquity-debug": "^0.0",
-		"phpmv/ubiquity-attributes": "^0.0.13"		
+		"phpmv/ubiquity-attributes": "^0.0.13",
+		"monolog/monolog": "^3.3",
+		"fakerphp/faker": "^1.21"		
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
