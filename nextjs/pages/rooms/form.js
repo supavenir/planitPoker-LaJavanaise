@@ -5,7 +5,10 @@ const onFinish = (values) => {
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
-const App = () => (
+const handleChange = (value) => {
+    console.log(`selected ${value}`);
+};
+const App = ({suites, teams, users}) => (
     <Form
         name="basic"
         labelCol={{span: 8,}}
@@ -44,10 +47,10 @@ const App = () => (
                        },
                    ]}
         >
-            <Select placeholder="Nom d'une suite." allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+            <Select placeholder="Nom d'une suite." onChange={handleChange}>
+                {suites.map((suite) => (
+                    <Select.Option value={suite.id}>{suite.name}</Select.Option>
+                ))}
             </Select>
         </Form.Item>
 
@@ -59,10 +62,10 @@ const App = () => (
                        },
                    ]}
         >
-            <Select placeholder="Nom d'une équipe." allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+            <Select placeholder="Nom d'une équipe." onChange={handleChange}>
+                {teams.map((team) => (
+                    <Select.Option value={team.id}>{team.name}</Select.Option>
+                ))}
             </Select>
         </Form.Item>
 
@@ -74,10 +77,8 @@ const App = () => (
                        },
                    ]}
         >
-            <Select placeholder="Nom du propriétaire." allowClear>
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+            <Select placeholder="Nom du propriétaire." onChange={handleChange}>
+                <Select.Option value="erreur">Erreur</Select.Option>
             </Select>
         </Form.Item>
 
@@ -86,4 +87,24 @@ const App = () => (
         </Form.Item>
     </Form>
 );
+
+export async function getStaticProps(context) {
+
+    const API_URL = 'http://127.0.0.1:8090/api/';
+    const resSuites = await fetch(API_URL+'suites');
+    const suites = await resSuites.json();
+    const resTeams = await fetch(API_URL+'teams');
+    const teams = await resTeams.json();
+    const resUsers = await fetch(API_URL+'users');
+    const users = await resUsers.json();
+
+    return {
+        props: {
+            suites,
+            teams,
+            users,
+        },
+    }
+}
+
 export default App;
