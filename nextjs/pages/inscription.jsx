@@ -22,7 +22,7 @@ export default function SignIn() {
                         <label>*Mot de passe (au minimum 8 caractères) :</label>
                         <input type='password' required='required' name='password'></input>
                     </div>
-                    <button class='ui button' type='submit'>Valider</button>
+                    <button class='ui button' type='submit'>Louka est amoureux</button>
                 </form>
             </div>
         </div>
