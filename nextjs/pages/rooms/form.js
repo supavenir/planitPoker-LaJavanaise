@@ -5,7 +5,9 @@ const onFinish = async (values) => {
     const options = {
         method: 'POST',
         headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:8090',
         },
         body: jsonConnect,
     };
