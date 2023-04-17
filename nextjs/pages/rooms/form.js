@@ -1,6 +1,17 @@
 import {Button, Checkbox, Form, Input, Select} from 'antd';
 const onFinish = async (values) => {
-    console.log('Success:', values);
+    const jsonConnect = JSON.stringify({username: 'qperrier', password: '0000'});
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: jsonConnect,
+    };
+    const resUsers = await fetch('http://127.0.0.1:8090/api/connect', options);
+
+    /*console.log('Success:', values);
     const jsonData = JSON.stringify(values);
     const options = {
         method: 'POST',
@@ -9,7 +20,7 @@ const onFinish = async (values) => {
         },
         body: jsonData,
     };
-    const resUsers = await fetch('http://127.0.0.1:8090/api/rooms', options);
+    const resUsers = await fetch('http://127.0.0.1:8090/api/rooms', options);*/
 };
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
