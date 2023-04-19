@@ -4,7 +4,7 @@ import {DownCircleTwoTone, HomeOutlined, MailOutlined, StepBackwardFilled} from 
 import {Menu} from "antd";
 
 import Image from 'next/image'
-import logo from '../public/planit_poker_logo-no-blanc.png'
+import logo from '@/public/planit_poker_logo-no-blanc.png'
 
 
 
