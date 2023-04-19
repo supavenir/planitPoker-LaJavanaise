@@ -1,5 +1,12 @@
 import {Button, Divider, List, Space, Table, Tag} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
+import RoomService from "@/pages/api/Room";
+
+async function handleChange(value) {
+    console.log(`selected ${value}`);
+    await RoomService.delete(value);
+}
+
 const App = ({rooms}) => (
     <>
         <Divider orientation="left">Liste des Rooms</Divider>
@@ -16,13 +23,14 @@ const columns = [
     },
     {
         title: 'Action',
-        key: 'action',
+        dataIndex: 'id',
+        key: 'id',
         align: 'center',
-        render: (_, room) => (
+        render: (id) => (
             <Space size="middle">
                 <Button type="primary" shape="circle" icon={<EditFilled />} />
                 <Button type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
-                <Button type="primary" shape="circle" icon={<DeleteFilled />} danger />
+                <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => handleChange(id)} danger />
             </Space>
         ),
     },

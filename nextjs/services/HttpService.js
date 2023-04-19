@@ -26,14 +26,18 @@ class HttpService {
         });
     }
 
-    /*static delete(url) {
-        return fetch(API_URL+url, {
+    static async delete(url) {
+        const dataToken = await connexionService.connexion();
+        return fetch(API_URL + url, {
             method: 'DELETE',
-            headers: headers
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataToken.access_token}`,
+            },
         }).then(response => {
             return response.json();
         });
-    }*/
+    }
 
 }
 export default HttpService;
