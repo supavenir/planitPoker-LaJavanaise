@@ -1,30 +1,7 @@
-import {Button, Checkbox, Form, Input, Select} from 'antd';
+import {Button, Form, Input, Select} from 'antd';
+import RoomService from "@/pages/api/Room";
 const onFinish = async (values) => {
-
-    const dataConnect = new URLSearchParams();
-    dataConnect.append('username', 'qperrier');
-    dataConnect.append('password', '0000');
-    const res = await fetch('http://127.0.0.1:8090/api/connect', {
-        method: 'POST',
-        body: dataConnect,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-    });
-
-    const dataToken = await res.json().then(data => data);
-
-    console.log('Success:', values);
-    const jsonData = JSON.stringify(values);
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${dataToken.access_token}`,
-        },
-        body: jsonData,
-    };
-    const resUsers = await fetch('http://127.0.0.1:8090/api/rooms', options);
+    await RoomService.add(values);
 };
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
