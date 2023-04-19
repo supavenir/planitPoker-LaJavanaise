@@ -4,8 +4,8 @@ class connexionService {
 
     static connexion() {
         const dataConnect = new URLSearchParams();
-        dataConnect.append('username', 'qperrier');
-        dataConnect.append('password', '0000');
+        dataConnect.append('username', 'qperrier'); // valeur de test
+        dataConnect.append('password', '0000'); // valeur de test
         return fetch(API_URL+'connect', {
             method: 'POST',
             body: dataConnect,
