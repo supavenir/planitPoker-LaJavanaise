@@ -14,7 +14,7 @@ export default class RoomService {
         return HttpService.post('rooms', room);
     }
 
-    /*static delete(id) {
+    static delete(id) {
         return HttpService.delete('rooms/'+id);
-    }*/
+    }
 }

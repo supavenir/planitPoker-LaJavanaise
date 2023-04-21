@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React, {useState} from "react";
-import {DownCircleTwoTone, HomeOutlined, MailOutlined, StepBackwardFilled} from '@ant-design/icons';
+import {AppstoreOutlined, DownCircleTwoTone} from '@ant-design/icons';
 import {Menu} from "antd";
 
 import Image from 'next/image'
@@ -35,6 +35,15 @@ const items = [
         ),
         key: 'alipay',
         icon:  <DownCircleTwoTone />,
+    },
+    {
+        label: (
+            <a href="/rooms"   rel="noopener noreferrer">
+                Liste de mes rooms
+            </a>
+        ),
+        key: 'rooms',
+        icon:  <AppstoreOutlined />,
     },
 
 
