@@ -54,7 +54,7 @@ const App = () => (
 
     <Form.Item
       label="Adresse courriel"
-      name="username"
+      name="email"
       rules={[
         {
           required: true,
