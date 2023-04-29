@@ -1,16 +1,34 @@
-import {Button, Divider, List, Space, Table, Tag} from 'antd';
+import {Button, Divider, List, Modal, Space, Table, Tag} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import RoomService from "@/pages/api/Room";
+import {useState} from "react";
 
 async function handleChange(value) {
     console.log(`selected ${value}`);
     await RoomService.delete(value);
 }
 
+const [isModalOpen, setIsModalOpen] = useState(false);
+const showModal = () => {
+    setIsModalOpen(true);
+};
+const handleOk = () => {
+    setIsModalOpen(false);
+};
+const handleCancel = () => {
+    setIsModalOpen(false);
+};
+
 const App = ({rooms}) => (
     <>
         <Divider orientation="left">Liste des Rooms</Divider>
+        <Button type="primary" onClick={showModal}>Ajouter une Room</Button>
         <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={rooms}/>
+        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+        </Modal>
     </>
 );
 
@@ -29,7 +47,7 @@ const columns = [
         render: (id) => (
             <Space size="middle">
                 <Button type="primary" shape="circle" icon={<EditFilled />} />
-                <Button type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
+                <Button href={"/rooms/"+id} type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
                 <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => handleChange(id)} danger />
             </Space>
         ),
