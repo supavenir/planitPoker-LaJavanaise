@@ -30,7 +30,16 @@ const items = [
     {
         label: (
             <a href="/rooms/form"   rel="noopener noreferrer" >
-               inscription
+               rooms
+            </a>
+        ),
+        key: 'alipay',
+
+    },
+    {
+        label: (
+            <a href="/inscription"   rel="noopener noreferrer" >
+                inscription
             </a>
         ),
         key: 'alipay',
