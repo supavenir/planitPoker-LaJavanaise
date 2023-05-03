@@ -29,7 +29,7 @@ const items = [
 
     {
         label: (
-            <a href="/rooms/form"  style={{height:"10vh",display:"flex",alignItems:"flex-end"}} rel="noopener noreferrer" >
+            <a href="/rooms/form"   rel="noopener noreferrer" >
                inscription
             </a>
         ),
@@ -62,10 +62,12 @@ const Layout = ({ children }) => {
       </Head>
 
 
-        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}  style={{height:"12vh",display:"flex",alignItems:"flex-end", position: "relative",right: "1%"}} />
       {children}
 
-        <footer  style={{backgroundColor:"white", width:"100vw", height:"20vh"}}>footer</footer>
+        <footer>
+<div class="pub_footer">Développé par : Louka FAUVEL,Geoffrey LAUNAY et Paul GOUIN</div>
+        </footer>
     </>
 
   );
