@@ -3,8 +3,9 @@ import React, {useState} from "react";
 import {DownCircleTwoTone, HomeOutlined, MailOutlined, StepBackwardFilled} from '@ant-design/icons';
 import {Menu} from "antd";
 
-import Image from 'next/image'
-import logo from '../public/planit_poker_logo-no-blanc.png'
+import Image from 'next/image';
+
+
 
 
 
@@ -13,13 +14,12 @@ const items = [
         label:  (<a href="/"   rel="noopener noreferrer">
             <Image
                 alt="logo"
-                src={logo}
-                width={700}
-                height={475}
-                sizes="100vw"
+                src="/planit_poker_logo-no-blanc.png"
+                width={500}
+                height={500}
                 style={{
-                    width: '100%',
-                    height: 'auto',
+                    width: 'auto',
+                    height: '10vh',
                 }}
             />
         </a>),
@@ -29,12 +29,12 @@ const items = [
 
     {
         label: (
-            <a href="/rooms/form"   rel="noopener noreferrer">
+            <a href="/rooms/form"  style={{height:"10vh",display:"flex",alignItems:"flex-end"}} rel="noopener noreferrer" >
                inscription
             </a>
         ),
         key: 'alipay',
-        icon:  <DownCircleTwoTone />,
+
     },
 
 
@@ -64,9 +64,10 @@ const Layout = ({ children }) => {
 
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
       {children}
-      <footer>
-      </footer>
+
+        <footer  style={{backgroundColor:"white", width:"100vw", height:"20vh"}}>footer</footer>
     </>
+
   );
 };
 
