@@ -80,17 +80,6 @@ const App = () => (
     </Form.Item>
 
     <Form.Item
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-    >
-      <Checkbox>Se souvenir de moi</Checkbox>
-    </Form.Item>
-
-    <Form.Item
       wrapperCol={{
         offset: 8,
         span: 16,
