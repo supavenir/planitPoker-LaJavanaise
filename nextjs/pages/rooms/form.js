@@ -1,5 +1,6 @@
 import { Button, Form, Input, Radio } from 'antd';
 import { useState } from 'react';
+import {StepForwardOutlined} from "@ant-design/icons";
 const App = () => {
     const [form] = Form.useForm();
     const [formLayout, setFormLayout] = useState('horizontal');
