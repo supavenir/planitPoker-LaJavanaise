@@ -3,15 +3,18 @@ import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import RoomService from "@/pages/api/Room";
 import {useState} from "react";
 import RoomForm from "@/pages/rooms/form";
+import {useRouter} from "next/router";
 
-async function handleChange(value) {
-    console.log(`selected ${value}`);
-    await RoomService.delete(value);
+async function handleModalDelete(value) {
+    //await RoomService.delete(value);
 }
 
 const App = ({rooms, suites, teams, users}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalDelete, setIsModalDelete] = useState(false);
+    const [objectDelete, setObjectDelete] = useState({});
+    const router = useRouter();
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -21,6 +24,46 @@ const App = ({rooms, suites, teams, users}) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    const showModalDelete = (id) => {
+        setIsModalDelete(true);
+        rooms.forEach((room) => {
+            if (room.id === id) {
+                setObjectDelete(room);
+            }
+        });
+    };
+    const handleOkDelete = async (value) => {
+        setIsModalDelete(false);
+        setObjectDelete({});
+        await RoomService.delete(value);
+        await router.push('/rooms');
+    };
+    const handleCancelDelete = () => {
+        setIsModalDelete(false);
+    };
+
+    const columns = [
+        {
+            title: 'Nom des rooms',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Action',
+            dataIndex: 'id',
+            key: 'id',
+            align: 'center',
+            render: (id) => (
+                <Space size="middle">
+                    <Button type="primary" shape="circle" icon={<EditFilled />} />
+                    <Button href={"/rooms/"+id} type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
+                    <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => showModalDelete(id)} danger />
+                </Space>
+            ),
+        },
+    ];
 
     return (
         <>
@@ -34,31 +77,19 @@ const App = ({rooms, suites, teams, users}) => {
             >
                 <RoomForm suites={suites} teams={teams} users={users}/>
             </Modal>
+            <Modal title={"Supprimer une Room ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
+                   footer={
+                       [
+                           <Button type="primary" htmlType="submit" onClick={(e) => handleOkDelete(objectDelete.id)} danger>Supprimer</Button>,
+                           <Button type="primary" htmlType="submit" onClick={handleCancelDelete}>Fermer</Button>
+                       ]
+                   }
+            >
+                <p>Êtes-vous sûr de vouloir supprimer la Room <b>{objectDelete.name}</b> ?</p>
+            </Modal>
         </>
     );
 }
-
-const columns = [
-    {
-        title: 'Nom des rooms',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'Action',
-        dataIndex: 'id',
-        key: 'id',
-        align: 'center',
-        render: (id) => (
-            <Space size="middle">
-                <Button type="primary" shape="circle" icon={<EditFilled />} />
-                <Button href={"/rooms/"+id} type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
-                <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => handleChange(id)} danger />
-            </Space>
-        ),
-    },
-];
 
 export async function getStaticProps(context) {
 
