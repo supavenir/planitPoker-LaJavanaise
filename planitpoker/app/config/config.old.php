@@ -4,11 +4,11 @@ return array(
 	"database"=>[
 			"type"=>"mysql",
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper",
-			"dbName"=>getenv('DB_NAME'),
+			"dbName"=>false,
 			"serverName"=>"127.0.0.1",
 			"port"=>"3306",
-			"user"=>getenv('DB_USER'),
-			"password"=>getenv('DB_PASS'),
+			"user"=>false,
+			"password"=>false,
 			"options"=>[],
 			"cache"=>false
 			],

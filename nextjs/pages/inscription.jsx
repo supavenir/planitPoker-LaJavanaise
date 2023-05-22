@@ -1,31 +1,94 @@
-import React from 'react'
-  
-export default function SignIn() {
-    return (
-      <main>
-        <div class='ui container center aligned'>
-            <div class='ui segment'>
-                <form method='post' class='ui form validForm' action=''>
-                    <div class='field'>
-                        <label>*Login (nom d'utilisateur) :</label>
-                        <input type='text'></input>
-                    </div>
-                    <div class='field'>
-                        <label>*Nom Prenom:</label>
-                        <input type='text' required='required' name='nom'></input>
-                    </div>
-                    <div class='field'>
-                        <label>*Adresse courriel :</label>
-                        <input type='email' required='required' name='email'></input>
-                    </div>
-                    <div class='field'>
-                        <label>*Mot de passe (au minimum 8 caractères) :</label>
-                        <input type='password' required='required' name='password'></input>
-                    </div>
-                    <button class='ui button' type='submit'>Valider</button>
-                </form>
-            </div>
-        </div>
-      </main>
-    )
-}
+import { Button, Checkbox, Form, Input } from 'antd';
+import React from 'react';
+
+const onFinish = (values) => {
+  console.log('Success:', values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log('Failed:', errorInfo);
+};
+const App = () => (
+  <Form
+    name="basic"
+    labelCol={{
+      span: 8,
+    }}
+    wrapperCol={{
+      span: 16,
+    }}
+    style={{
+      maxWidth: 600,
+    }}
+    initialValues={{
+      remember: true,
+    }}
+    onFinish={onFinish}
+    onFinishFailed={onFinishFailed}
+    autoComplete="off"
+  >
+    <Form.Item
+      label="Nom complet"
+      name="completName"
+      rules={[
+        {
+          required: true,
+          message: 'Entrez votre nom complet',
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item
+      label="Nom d'utilisateur"
+      name="username"
+      rules={[
+        {
+          required: true,
+          message: "Entrez un nom d'utilisateur",
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item
+      label="Adresse courriel"
+      name="email"
+      rules={[
+        {
+          required: true,
+          message: "Entrez une adresse courriel valide",
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
+
+
+    <Form.Item
+      label="Mot de passe"
+      name="password"
+      rules={[
+        {
+          required: true,
+          message: 'Saisissez un mot de passe, fort de preference.',
+        },
+      ]}
+    >
+      <Input.Password />
+    </Form.Item>
+
+    <Form.Item
+      wrapperCol={{
+        offset: 8,
+        span: 16,
+      }}
+    >
+      <Button type="primary" htmlType="submit">
+        Valider
+      </Button>
+    </Form.Item>
+  </Form>
+);
+export default App;
