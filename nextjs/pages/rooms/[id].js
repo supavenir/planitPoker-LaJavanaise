@@ -4,12 +4,25 @@ import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {useState} from "react";
 import {useRouter} from "next/router";
 import StoryService from "@/pages/api/Story";
+import RoomForm from "@/pages/rooms/form";
+import StoryForm from "@/pages/stories/form";
 
 const App = ({room, stories}) => {
 
+    const [isModalCreate, setIsModalCreate] = useState(false);
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [objectDelete, setObjectDelete] = useState({});
     const router = useRouter();
+
+    const showModalCreate = () => {
+        setIsModalCreate(true);
+    };
+    const handleOkCreate = () => {
+        setIsModalCreate(false);
+    };
+    const handleCancelCreate = () => {
+        setIsModalCreate(false);
+    };
 
     const showModalDelete = (id) => {
         setIsModalDelete(true);
@@ -53,7 +66,15 @@ const App = ({room, stories}) => {
     return (
         <>
             <Divider orientation="center">{room.name}</Divider>
+            <Button type="primary" onClick={showModalCreate}>Ajouter une Room</Button>
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={stories}/>
+            <Modal title="Ajouter une US" open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
+                   footer={
+                       [<Button form="story" type="primary" htmlType="submit" onClick={handleOkCreate}>Submit</Button>]
+                   }
+            >
+                <StoryForm room={room}/>
+            </Modal>
             <Modal title={"Supprimer un US ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
                    footer={
                        [
