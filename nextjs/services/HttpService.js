@@ -26,6 +26,20 @@ class HttpService {
         });
     }
 
+    static async put(url, data) {
+        const dataToken = await connexionService.connexion();
+        return fetch(API_URL + url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataToken.access_token}`,
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            return response.json();
+        });
+    }
+
     static async delete(url) {
         const dataToken = await connexionService.connexion();
         return fetch(API_URL + url, {

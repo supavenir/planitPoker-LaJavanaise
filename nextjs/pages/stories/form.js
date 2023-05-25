@@ -3,11 +3,22 @@ import {API_URL} from "@/services/HttpService";
 import StoryService from "@/pages/api/Story";
 import {useRouter} from "next/router";
 
-const StoryForm = ({room}) => {
+const StoryForm = ({room, story}) => {
     const router = useRouter();
+    const [form] = Form.useForm();
+    form.setFieldsValue({
+        name: story.name,
+        description: story.description,
+        room: room.id,
+    });
     const onFinish = async (values) => {
-        await StoryService.add(values);
-        await router.push('/rooms'+room.id); // à modifier
+        if(story.id !== undefined) {
+            await StoryService.update(values);
+            await router.push('/rooms/'+room.id);
+        } else {
+            await StoryService.add(values);
+            await router.push('/rooms/'+room.id);
+        }
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -18,6 +29,7 @@ const StoryForm = ({room}) => {
 
     return (
         <Form
+            form={form}
             name="story"
             labelCol={{span: 8,}}
             wrapperCol={{span: 16,}}
@@ -35,14 +47,18 @@ const StoryForm = ({room}) => {
                                message: "Ajouter un nom à l'US.",
                            },
                        ]}
+                       initialValue={story.name}
             >
                 <Input placeholder="Nom de l'US"/>
             </Form.Item>
 
-            <Form.Item label="Description" name="description">
+            <Form.Item label="Description" name="description" initialValue={story.description}>
                 <Input.TextArea placeholder="Description"/>
             </Form.Item>
             <Form.Item name="room" initialValue={room.id} hidden>
+                <Input/>
+            </Form.Item>
+            <Form.Item name="id" initialValue={story.id} hidden>
                 <Input/>
             </Form.Item>
         </Form>

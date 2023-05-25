@@ -1,4 +1,4 @@
-import {Button, Divider, List, Modal, Space, Table} from "antd";
+import {Button, Divider, Form, List, Modal, Space, Table} from "antd";
 import {API_URL} from "@/services/HttpService";
 import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import {useState} from "react";
@@ -10,18 +10,33 @@ import StoryForm from "@/pages/stories/form";
 const App = ({room, stories}) => {
 
     const [isModalCreate, setIsModalCreate] = useState(false);
+    const [isModalCreateTitle, setIsModalCreateTitle] = useState('Ajouter une US');
+    const [objectModify, setObjectModify] = useState({});
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [objectDelete, setObjectDelete] = useState({});
     const router = useRouter();
 
-    const showModalCreate = () => {
+    const showModalCreate = (id) => {
         setIsModalCreate(true);
+        if(id !== {}) {
+            stories.forEach((story) => {
+                if (story.id === id) {
+                    setIsModalCreateTitle('Modifier une US');
+                    setObjectModify(story);
+                }
+            });
+        } else {
+            setIsModalCreateTitle('Ajouter une US');
+            setObjectModify({});
+        }
     };
     const handleOkCreate = () => {
         setIsModalCreate(false);
+        setObjectModify({});
     };
     const handleCancelCreate = () => {
         setIsModalCreate(false);
+        setObjectModify({});
     };
 
     const showModalDelete = (id) => {
@@ -40,6 +55,7 @@ const App = ({room, stories}) => {
     };
     const handleCancelDelete = () => {
         setIsModalDelete(false);
+        setObjectDelete({});
     };
 
     const columns = [
@@ -55,7 +71,7 @@ const App = ({room, stories}) => {
             align: 'center',
             render: (id) => (
                 <Space size="middle">
-                    <Button type="primary" shape="circle" icon={<EditFilled />} />
+                    <Button type="primary" shape="circle" icon={<EditFilled />} onClick={(e) => showModalCreate(id)} />
                     <Button type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
                     <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => showModalDelete(id)} danger />
                 </Space>
@@ -66,14 +82,14 @@ const App = ({room, stories}) => {
     return (
         <>
             <Divider orientation="center">{room.name}</Divider>
-            <Button type="primary" onClick={showModalCreate}>Ajouter une Room</Button>
+            <Button type="primary" onClick={(e) => showModalCreate({})}>Ajouter une Room</Button>
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={stories}/>
-            <Modal title="Ajouter une US" open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
+            <Modal title={isModalCreateTitle} open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
                    footer={
                        [<Button form="story" type="primary" htmlType="submit" onClick={handleOkCreate}>Submit</Button>]
                    }
             >
-                <StoryForm room={room}/>
+                <StoryForm room={room} story={objectModify}/>
             </Modal>
             <Modal title={"Supprimer un US ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
                    footer={

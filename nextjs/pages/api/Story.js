@@ -10,6 +10,10 @@ export default class StoryService {
         return HttpService.post('story', story);
     }
 
+    static update(story) {
+        return HttpService.put('story/'+story.id, story);
+    }
+
     static delete(id) {
         return HttpService.delete('story/'+id);
     }
