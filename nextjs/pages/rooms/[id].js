@@ -7,7 +7,7 @@ import StoryService from "@/pages/api/Story";
 import RoomForm from "@/pages/rooms/form";
 import StoryForm from "@/pages/stories/form";
 
-const App = ({room, stories}) => {
+const App = ({room, stories, votes}) => {
 
     const [isModalCreate, setIsModalCreate] = useState(false);
     const [isModalCreateTitle, setIsModalCreateTitle] = useState('Ajouter une US');
@@ -23,6 +23,11 @@ const App = ({room, stories}) => {
                 if (story.id === id) {
                     setIsModalCreateTitle('Modifier une US');
                     setObjectModify(story);
+                    votes.forEach((vote) => {
+                        if (vote.story === story.id) {
+                            console.log(vote);
+                        }
+                    });
                 }
             });
         } else {
@@ -131,12 +136,17 @@ export async function getStaticProps(context) {
     const resRoom = await fetch(API_URL+'rooms/'+id);
     const room = await resRoom.json();
     const resStories = await fetch(API_URL+'story');
-    const stories = await resStories.json();
+    const storiesAll = await resStories.json();
+    const stories = storiesAll.filter(story => story.room === room.id);
+    const resVotes = await fetch(API_URL+'voter');
+    const votesAll = await resVotes.json();
+    const votes = votesAll.filter(vote => stories.map(story => story.id).includes(vote.story));
 
     return {
         props: {
             room,
             stories,
+            votes,
         },
     }
 
