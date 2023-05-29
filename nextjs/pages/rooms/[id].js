@@ -14,6 +14,7 @@ const App = ({room, stories, votes}) => {
     const [objectModify, setObjectModify] = useState({});
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [objectDelete, setObjectDelete] = useState({});
+    const [objectStory, setObjectStory] = useState("");
     const router = useRouter();
 
     const showModalCreate = (id) => {
@@ -23,11 +24,6 @@ const App = ({room, stories, votes}) => {
                 if (story.id === id) {
                     setIsModalCreateTitle('Modifier une US');
                     setObjectModify(story);
-                    votes.forEach((vote) => {
-                        if (vote.story === story.id) {
-                            console.log(vote);
-                        }
-                    });
                 }
             });
         } else {
@@ -63,6 +59,11 @@ const App = ({room, stories, votes}) => {
         setObjectDelete({});
     };
 
+    const activeVote = (value) => {
+        console.log(value[0]);
+        setObjectStory(value[0].name);
+    }
+
     const columns = [
         {
             title: 'US',
@@ -87,7 +88,9 @@ const App = ({room, stories, votes}) => {
     return (
         <>
             <Divider orientation="center">{room.name}</Divider>
-            <Button type="primary" onClick={(e) => showModalCreate({})}>Ajouter une Room</Button>
+            <Button type="primary" onClick={(e) => activeVote(stories)}>Lancer les votes</Button>
+            <h1>{objectStory}</h1>
+            <Button type="primary" onClick={(e) => showModalCreate({})}>Ajouter une US</Button>
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={stories}/>
             <Modal title={isModalCreateTitle} open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
                    footer={
