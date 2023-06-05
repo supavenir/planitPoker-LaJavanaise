@@ -90,6 +90,12 @@ class MyRestController extends \Ubiquity\controllers\rest\api\json\JsonRestContr
 		parent::add_($resource);
 	}
 
+    #[Post('user', priority: 0)]
+    public function addUser($resource) {
+        TransformersManager::startProd('transform');
+        parent::add_('user');
+    }
+
 	/**
 	 * Updates an existing instance of $resource.
 	 * Data attributes are send in request body (in JSON format)
