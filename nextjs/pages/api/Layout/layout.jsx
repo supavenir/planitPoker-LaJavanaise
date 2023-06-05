@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
         </a>
         </div>
 
-        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{backgroundColor:'pink' ,width:'101vw', textAlign:'center',position:'relative', right:'10px'}}   />
+        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{borderRadius:'25px' ,width:'100vw', textAlign:'center',position:'relative', right:'8px',display:'flex',justifyContent:'center'}}   />
 
       {children}
 
