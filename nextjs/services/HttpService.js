@@ -1,32 +1,57 @@
+import connexionService from "@/services/connexionService";
+
 export const API_URL = 'http://127.0.0.1:8090/api/';
-//Wrapper for the fetch api
 class HttpService {
-    static get(url, headers) {
+
+    /*static get(url) {
         return fetch(API_URL+url, {
             method: 'GET',
             headers: headers
         }).then(response => {
             return response.json();
         });
-    }
+    }*/
 
-    static post(url, data, headers) {
-        return fetch(API_URL+url, {
+    static async post(url, data) {
+        const dataToken = await connexionService.connexion();
+        return fetch(API_URL + url, {
             method: 'POST',
-            headers: headers,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataToken.access_token}`,
+            },
             body: JSON.stringify(data)
         }).then(response => {
             return response.json();
         });
     }
 
-    static delete(url, headers) {
-        return fetch(API_URL+url, {
-            method: 'DELETE',
-            headers: headers
+    static async put(url, data) {
+        const dataToken = await connexionService.connexion();
+        return fetch(API_URL + url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataToken.access_token}`,
+            },
+            body: JSON.stringify(data)
         }).then(response => {
             return response.json();
         });
     }
+
+    static async delete(url) {
+        const dataToken = await connexionService.connexion();
+        return fetch(API_URL + url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${dataToken.access_token}`,
+            },
+        }).then(response => {
+            return response.json();
+        });
+    }
+
 }
 export default HttpService;

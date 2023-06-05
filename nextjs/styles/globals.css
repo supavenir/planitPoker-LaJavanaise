@@ -16,12 +16,12 @@ footer {
   right: 10px;
   width: 100vw;
 }
+
 .pub_footer{
   height: 3vh;
   background-color: #08A829;
   position: relative;
   bottom: -20vh;
-
 
   color: white;
   font-size: 2vh;
