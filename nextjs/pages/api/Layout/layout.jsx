@@ -16,10 +16,19 @@ const items = [
     {
         label: (
             <a href="/inscription"   rel="noopener noreferrer" >
-                inscription
+                Inscription
             </a>
         ),
         key: 'incrit',
+
+    },
+    {
+        label: (
+            <a href="/connexion"   rel="noopener noreferrer" >
+                Connexion
+            </a>
+        ),
+        key: 'connexion',
 
     },
 

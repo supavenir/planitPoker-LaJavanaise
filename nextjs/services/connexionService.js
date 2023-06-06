@@ -2,10 +2,10 @@ import {API_URL} from "@/services/HttpService";
 
 class connexionService {
 
-    static connexion() {
+    static connexion(username, password) {
         const dataConnect = new URLSearchParams();
-        dataConnect.append('username', 'qperrier'); // valeur de test
-        dataConnect.append('password', '0000'); // valeur de test
+        dataConnect.append(username[0], username[1]);
+        dataConnect.append(password[0], password[1]);
         return fetch(API_URL+'connect', {
             method: 'POST',
             body: dataConnect,

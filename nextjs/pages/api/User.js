@@ -1,19 +1,16 @@
 import HttpService from "@/services/HttpService";
 
-export interface User{
-    id;
-    username;
-    email;
-    password;
-    completeName;
-}
 export default class UserService{
-    static getAll(){
+    /*static getAll(){
         return HttpService.get('users');
-    }
+    }*/
 
     static add(user){
         return HttpService.post('users', user);
+    }
+
+    static update(story) {
+        return HttpService.put('story/'+story.id, story);
     }
 
     static delete(id){

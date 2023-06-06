@@ -1,4 +1,5 @@
 import connexionService from "@/services/connexionService";
+import cookie from "js-cookie";
 
 export const API_URL = 'http://127.0.0.1:8090/api/';
 class HttpService {
@@ -13,7 +14,7 @@ class HttpService {
     }*/
 
     static async post(url, data) {
-        const dataToken = await connexionService.connexion();
+        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'POST',
             headers: {
@@ -27,7 +28,7 @@ class HttpService {
     }
 
     static async put(url, data) {
-        const dataToken = await connexionService.connexion();
+        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'PUT',
             headers: {
@@ -41,7 +42,7 @@ class HttpService {
     }
 
     static async delete(url) {
-        const dataToken = await connexionService.connexion();
+        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'DELETE',
             headers: {
