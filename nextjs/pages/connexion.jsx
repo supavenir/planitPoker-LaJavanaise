@@ -12,8 +12,9 @@ const App = () => {
         const username = ['username', values.username];
         const password = ['password', values.password];
         await connexionService.connexion(username, password).then(r => {
-            const userObjectString = JSON.stringify(r);
-            cookie.set('userConnect', userObjectString, { expires: 1/24 });
+            cookie.set('token', r.access_token, { expires: 1/24 });
+            cookie.set('id', r.user.id, { expires: 1/24 });
+            cookie.set('username', r.user.username, { expires: 1/24 });
         });
         await router.push('/');
     }

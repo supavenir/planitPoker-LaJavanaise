@@ -14,12 +14,11 @@ class HttpService {
     }*/
 
     static async post(url, data) {
-        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${dataToken.access_token}`,
+                'Authorization': `Bearer ${cookie.get('token')}`,
             },
             body: JSON.stringify(data)
         }).then(response => {
@@ -28,12 +27,11 @@ class HttpService {
     }
 
     static async put(url, data) {
-        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${dataToken.access_token}`,
+                'Authorization': `Bearer ${cookie.get('token')}`,
             },
             body: JSON.stringify(data)
         }).then(response => {
@@ -42,12 +40,11 @@ class HttpService {
     }
 
     static async delete(url) {
-        const dataToken = JSON.parse(cookie.get('userConnect'));
         return fetch(API_URL + url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${dataToken.access_token}`,
+                'Authorization': `Bearer ${cookie.get('token')}`,
             },
         }).then(response => {
             return response.json();

@@ -1,13 +1,10 @@
-import {Button, Divider, List, Modal, Space, Table, Tag} from 'antd';
+import {Button, Divider, Modal, Space, Table} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled} from "@ant-design/icons";
 import RoomService from "@/pages/api/Room";
 import {useState} from "react";
 import RoomForm from "@/pages/rooms/form";
 import {useRouter} from "next/router";
-
-async function handleModalDelete(value) {
-    //await RoomService.delete(value);
-}
+import {API_URL} from "@/services/HttpService";
 
 const App = ({rooms, suites, teams, users}) => {
 
@@ -67,7 +64,7 @@ const App = ({rooms, suites, teams, users}) => {
 
     return (
         <>
-            <Divider orientation="left">Liste des Rooms</Divider>
+            <Divider orientation="left">Liste de mes Rooms</Divider>
             <Button type="primary" onClick={showModal}>Ajouter une Room</Button>
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={rooms}/>
             <Modal title="Ajouter une Room" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
@@ -91,11 +88,10 @@ const App = ({rooms, suites, teams, users}) => {
     );
 }
 
-export async function getStaticProps(context) {
-
-    const API_URL = 'http://127.0.0.1:8090/api/';
+export async function getServerSideProps({req, res}) {
     const resRooms = await fetch(API_URL+'room');
-    const rooms = await resRooms.json();
+    const roomsAll = await resRooms.json();
+    const rooms = await roomsAll.filter(room => room.user === parseInt(req.cookies.id));
     const resSuites = await fetch(API_URL+'suites');
     const suites = await resSuites.json();
     const resTeams = await fetch(API_URL+'teams');
