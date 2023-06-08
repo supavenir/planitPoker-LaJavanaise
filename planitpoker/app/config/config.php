@@ -1,6 +1,6 @@
 <?php
 return array(
-	"siteUrl"=>"http://127.0.0.1/planitPoker/public/",
+	"siteUrl"=>"http://srv2-vm-2102.sts-sio-caen.info/",
 	"database"=>[
 			"type"=>"mysql",
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper",
