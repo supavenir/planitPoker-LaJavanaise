@@ -94,7 +94,7 @@ const App = ({room, stories, votes}) => {
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={stories}/>
             <Modal title={isModalCreateTitle} open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
                    footer={
-                       [<Button form="story" type="primary" htmlType="submit" onClick={handleOkCreate}>Submit</Button>]
+                       [<Button key="1" form="story" type="primary" htmlType="submit" onClick={handleOkCreate}>Submit</Button>]
                    }
             >
                 <StoryForm room={room} story={objectModify}/>
@@ -102,8 +102,8 @@ const App = ({room, stories, votes}) => {
             <Modal title={"Supprimer un US ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
                    footer={
                        [
-                           <Button type="primary" htmlType="submit" onClick={(e) => handleOkDelete(objectDelete.id)} danger>Supprimer</Button>,
-                           <Button type="primary" htmlType="submit" onClick={handleCancelDelete}>Fermer</Button>
+                           <Button key="1" type="primary" htmlType="submit" onClick={(e) => handleOkDelete(objectDelete.id)} danger>Supprimer</Button>,
+                           <Button key="2" type="primary" htmlType="submit" onClick={handleCancelDelete}>Fermer</Button>
                        ]
                    }
             >
@@ -140,10 +140,29 @@ export async function getStaticProps(context) {
     const room = await resRoom.json();
     const resStories = await fetch(API_URL+'story');
     const storiesAll = await resStories.json();
-    const stories = storiesAll.filter(story => story.room === room.id);
+    const storiesBase = storiesAll.filter(story => story.room === room.id);
+    const stories = storiesBase.map(story => {
+        return {
+            key: story.id,
+            id: story.id,
+            name: story.name,
+            description: story.description,
+            points: story.points,
+            completed: story.completed,
+            room: story.room,
+        }
+    });
     const resVotes = await fetch(API_URL+'voter');
     const votesAll = await resVotes.json();
-    const votes = votesAll.filter(vote => stories.map(story => story.id).includes(vote.story));
+    const votesBase = votesAll.filter(vote => stories.map(story => story.id).includes(vote.story));
+    const votes = votesBase.map(vote => {
+        return {
+            key: vote.user,
+            user: vote.user,
+            story: vote.story,
+            points: vote.points,
+        }
+    });
 
     return {
         props: {

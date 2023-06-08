@@ -2,31 +2,32 @@ import Head from "next/head";
 import React, {useState} from "react";
 import {Menu} from "antd";
 import Image from 'next/image';
+import Link from "next/link";
 
 const items = [
 
     {
         label: (
-            <a href="/rooms"   rel="noopener noreferrer">
+            <Link href="/rooms"   rel="noopener noreferrer">
                 Liste de mes rooms
-            </a>
+            </Link>
         ),
         key: 'rooms',
     },
     {
         label: (
-            <a href="/inscription"   rel="noopener noreferrer" >
+            <Link href="/inscription"   rel="noopener noreferrer" >
                 Inscription
-            </a>
+            </Link>
         ),
         key: 'incrit',
 
     },
     {
         label: (
-            <a href="/connexion"   rel="noopener noreferrer" >
+            <Link href="/connexion"   rel="noopener noreferrer" >
                 Connexion
-            </a>
+            </Link>
         ),
         key: 'connexion',
 
@@ -57,7 +58,7 @@ const Layout = ({ children }) => {
 <div style={{width:'100vw',
     display:"flex",
     justifyContent:"center",}}>
-    <a href="/"   rel="noopener noreferrer">
+    <Link href="/"   rel="noopener noreferrer">
             <Image
                 alt="logo"
                 src="/baniere_sans_blanc.png"
@@ -70,15 +71,15 @@ const Layout = ({ children }) => {
                     justifyContent:"center",
                 }}
             />
-        </a>
+        </Link>
         </div>
 
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} style={{borderRadius:'25px' ,width:'100vw', textAlign:'center',position:'relative', right:'8px',display:'flex',justifyContent:'center'}}   />
 
-      {children}
+        {children}
 
         <footer>
-<div class="pub_footer">Développé par : Louka FAUVEL, Geoffrey LAUNAY et Paul GOUIN</div>
+            <div className="pub_footer">Développé par : Louka FAUVEL, Geoffrey LAUNAY et Paul GOUIN</div>
         </footer>
     </>
 

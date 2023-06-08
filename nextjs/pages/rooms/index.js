@@ -69,7 +69,7 @@ const App = ({rooms, suites, teams, users}) => {
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={rooms}/>
             <Modal title="Ajouter une Room" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                    footer={
-                        [<Button form="room" type="primary" htmlType="submit" onClick={handleOk}>Submit</Button>]
+                        [<Button key="1" form="room" type="primary" htmlType="submit" onClick={handleOk}>Submit</Button>]
                     }
             >
                 <RoomForm suites={suites} teams={teams} users={users}/>
@@ -77,8 +77,8 @@ const App = ({rooms, suites, teams, users}) => {
             <Modal title={"Supprimer une Room ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
                    footer={
                        [
-                           <Button type="primary" htmlType="submit" onClick={(e) => handleOkDelete(objectDelete.id)} danger>Supprimer</Button>,
-                           <Button type="primary" htmlType="submit" onClick={handleCancelDelete}>Fermer</Button>
+                           <Button key="1" type="primary" htmlType="submit" onClick={(e) => handleOkDelete(objectDelete.id)} danger>Supprimer</Button>,
+                           <Button key="2" type="primary" htmlType="submit" onClick={handleCancelDelete}>Fermer</Button>
                        ]
                    }
             >
@@ -91,13 +91,54 @@ const App = ({rooms, suites, teams, users}) => {
 export async function getServerSideProps({req, res}) {
     const resRooms = await fetch(API_URL+'room');
     const roomsAll = await resRooms.json();
-    const rooms = await roomsAll.filter(room => room.user === parseInt(req.cookies.id));
+    const roomsBase = await roomsAll.filter(room => room.user === parseInt(req.cookies.id));
+    const rooms = await roomsBase.map(room => {
+        return {
+            key : room.id,
+            id: room.id,
+            name: room.name,
+            description: room.description,
+            points: room.points,
+            uuid: room.uuid,
+            connectedUsers: room.connectedUsers,
+            suite: room.suite,
+            team: room.team,
+            user: room.user,
+        }
+    });
     const resSuites = await fetch(API_URL+'suites');
-    const suites = await resSuites.json();
+    const suitesBase = await resSuites.json();
+    const suites = await suitesBase.map(suite => {
+        return {
+            key : suite.id,
+            id: suite.id,
+            name: suite.name,
+            public: suite.public,
+            suitevalues: suite.suitevalues,
+        }
+    });
     const resTeams = await fetch(API_URL+'teams');
-    const teams = await resTeams.json();
+    const teamsBase = await resTeams.json();
+    const teams = await teamsBase.map(team => {
+        return {
+            key : team.id,
+            id: team.id,
+            name: team.name,
+            user: team.user,
+        }
+    });
     const resUsers = await fetch(API_URL+'users');
-    const users = await resUsers.json();
+    const usersBase = await resUsers.json();
+    const users = await usersBase.map(user => {
+        return {
+            key : user.id,
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            completeName: user.completeName,
+        }
+    });
 
     return {
         props: {

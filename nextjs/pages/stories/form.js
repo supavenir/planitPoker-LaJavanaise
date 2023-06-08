@@ -7,6 +7,14 @@ import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 const StoryForm = ({room, story}) => {
     const router = useRouter();
     const [form] = Form.useForm();
+    if (story === undefined) {
+        story = {
+            name: "",
+            description: "",
+            room: "",
+            id: "",
+        };
+    }
     form.setFieldsValue({
         name: story.name,
         description: story.description,

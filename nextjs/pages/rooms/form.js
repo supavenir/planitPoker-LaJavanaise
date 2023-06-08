@@ -1,6 +1,7 @@
 import {Button, Form, Input, Select} from 'antd';
 import RoomService from "@/pages/api/Room";
 import {useRouter} from "next/router";
+import {API_URL} from "@/services/HttpService";
 
 const onFinish = async (values) => {
     await RoomService.add(values);
@@ -67,7 +68,7 @@ const RoomForm = ({suites, teams, users}) => {
             >
                 <Select placeholder="Nom d'une suite." onChange={handleChange}>
                     {suites.map((suite) => (
-                        <Select.Option value={suite.id}>{suite.name}</Select.Option>
+                        <Select.Option key={suite.key} value={suite.id}>{suite.name}</Select.Option>
                     ))}
                 </Select>
             </Form.Item>
@@ -82,7 +83,7 @@ const RoomForm = ({suites, teams, users}) => {
             >
                 <Select placeholder="Nom d'une équipe." onChange={handleChange}>
                     {teams.map((team) => (
-                        <Select.Option value={team.id}>{team.name}</Select.Option>
+                        <Select.Option key={team.key} value={team.id}>{team.name}</Select.Option>
                     ))}
                 </Select>
             </Form.Item>
@@ -97,7 +98,7 @@ const RoomForm = ({suites, teams, users}) => {
             >
                 <Select placeholder="Nom du propriétaire." onChange={handleChange}>
                     {users.map((user) => (
-                        <Select.Option value={user.id}>{user.username}</Select.Option>
+                        <Select.Option key={user.key} value={user.id}>{user.username}</Select.Option>
                     ))}
                 </Select>
             </Form.Item>
@@ -107,13 +108,39 @@ const RoomForm = ({suites, teams, users}) => {
 
 export async function getStaticProps(context) {
 
-    const API_URL = 'http://127.0.0.1:8090/api/';
     const resSuites = await fetch(API_URL+'suites');
-    const suites = await resSuites.json();
+    const suitesBase = await resSuites.json();
+    const suites = await suitesBase.map(suite => {
+        return {
+            key : suite.id,
+            id: suite.id,
+            name: suite.name,
+            public: suite.public,
+            suitevalues: suite.suitevalues,
+        }
+    });
     const resTeams = await fetch(API_URL+'teams');
-    const teams = await resTeams.json();
+    const teamsBase = await resTeams.json();
+    const teams = await teamsBase.map(team => {
+        return {
+            key : team.id,
+            id: team.id,
+            name: team.name,
+            user: team.user,
+        }
+    });
     const resUsers = await fetch(API_URL+'users');
-    const users = await resUsers.json();
+    const usersBase = await resUsers.json();
+    const users = await usersBase.map(user => {
+        return {
+            key : user.id,
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            password: user.password,
+            completeName: user.completeName,
+        }
+    });
 
     return {
         props: {
