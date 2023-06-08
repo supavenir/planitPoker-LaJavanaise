@@ -149,9 +149,17 @@ const StoryForm = ({room, story}) => {
 
 export async function getStaticProps(context) {
 
-    const resRooms = await fetch(API_URL+'rooms');
-    const rooms = await resRooms.json();
-    const room = rooms[0];
+    const room = {
+        id: "",
+        name: "",
+        description: "",
+        points: "",
+        uuid: "",
+        connectedUsers: "[]",
+        suite: "",
+        team: "",
+        user: "",
+    };
     const story = {
         name: "",
         description: "",
