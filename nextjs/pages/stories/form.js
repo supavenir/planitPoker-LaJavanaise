@@ -3,19 +3,13 @@ import {API_URL} from "@/services/HttpService";
 import StoryService from "@/pages/api/Story";
 import {useRouter} from "next/router";
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+import React from 'react';
 
 const StoryForm = ({room, story}) => {
     const router = useRouter();
-    const [form] = Form.useForm();
-    if (story === undefined) {
-        story = {
-            name: "",
-            description: "",
-            room: "",
-            id: "",
-        };
-    }
-    form.setFieldsValue({
+    const formRef = React.useRef(null);
+
+    formRef.current?.setFieldsValue({
         name: story.name,
         description: story.description,
         room: room.id,
@@ -46,7 +40,7 @@ const StoryForm = ({room, story}) => {
 
     return (
         <Form
-            form={form}
+            ref={formRef}
             name="story"
             labelCol={{span: 8,}}
             wrapperCol={{span: 16,}}
@@ -158,10 +152,17 @@ export async function getStaticProps(context) {
     const resRooms = await fetch(API_URL+'rooms');
     const rooms = await resRooms.json();
     const room = rooms[0];
+    const story = {
+        name: "",
+        description: "",
+        room: "",
+        id: "",
+    };
 
     return {
         props: {
             room,
+            story,
         },
     }
 }
