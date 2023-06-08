@@ -11,6 +11,8 @@ const App = ({room, stories, votes}) => {
 
     const [isModalCreate, setIsModalCreate] = useState(false);
     const [isModalCreateTitle, setIsModalCreateTitle] = useState('Ajouter une US');
+    const [isModalModify, setIsModalModify] = useState(false);
+    const [isModalModifyTitle, setIsModalModifyTitle] = useState('Modifier une US');
     const [objectModify, setObjectModify] = useState({});
     const [isModalDelete, setIsModalDelete] = useState(false);
     const [objectDelete, setObjectDelete] = useState({});
@@ -19,17 +21,7 @@ const App = ({room, stories, votes}) => {
 
     const showModalCreate = (id) => {
         setIsModalCreate(true);
-        if(id !== {}) {
-            stories.forEach((story) => {
-                if (story.id === id) {
-                    setIsModalCreateTitle('Modifier une US');
-                    setObjectModify(story);
-                }
-            });
-        } else {
-            setIsModalCreateTitle('Ajouter une US');
-            setObjectModify({});
-        }
+        setObjectModify({});
     };
     const handleOkCreate = () => {
         setIsModalCreate(false);
@@ -37,6 +29,23 @@ const App = ({room, stories, votes}) => {
     };
     const handleCancelCreate = () => {
         setIsModalCreate(false);
+        setObjectModify({});
+    };
+
+    const showModalModify = (id) => {
+        stories.forEach((story) => {
+            if (story.id === id) {
+                setObjectModify(story);
+            }
+        });
+        setIsModalModify(true);
+    };
+    const handleOkModify = () => {
+        setIsModalModify(false);
+        setObjectModify({});
+    };
+    const handleCancelModify = () => {
+        setIsModalModify(false);
         setObjectModify({});
     };
 
@@ -77,7 +86,7 @@ const App = ({room, stories, votes}) => {
             align: 'center',
             render: (id) => (
                 <Space size="middle">
-                    <Button type="primary" shape="circle" icon={<EditFilled />} onClick={(e) => showModalCreate(id)} />
+                    <Button type="primary" shape="circle" icon={<EditFilled />} onClick={(e) => showModalModify(id)} />
                     <Button type="primary" shape="circle" icon={<EyeFilled />} style={{background: "#73d13d"}} />
                     <Button type="primary" shape="circle" icon={<DeleteFilled />} onClick={(e) => showModalDelete(id)} danger />
                 </Space>
@@ -90,11 +99,18 @@ const App = ({room, stories, votes}) => {
             <Divider orientation="center">{room.name}</Divider>
             <Button type="primary" onClick={(e) => activeVote(stories)}>Lancer les votes</Button>
             <h1>{objectStory}</h1>
-            <Button type="primary" onClick={(e) => showModalCreate({})}>Ajouter une US</Button>
+            <Button type="primary" onClick={(e) => showModalCreate()}>Ajouter une US</Button>
             <Table columns={columns} pagination={{ position: ['none', 'bottomCenter'] }} dataSource={stories}/>
             <Modal title={isModalCreateTitle} open={isModalCreate} onOk={handleOkCreate} onCancel={handleCancelCreate}
                    footer={
                        [<Button key="1" form="story" type="primary" htmlType="submit" onClick={handleOkCreate}>Submit</Button>]
+                   }
+            >
+                <StoryForm room={room} story={objectModify}/>
+            </Modal>
+            <Modal title={isModalModifyTitle} open={isModalModify} onOk={handleOkModify} onCancel={handleCancelModify}
+                   footer={
+                       [<Button key="1" form="story" type="primary" htmlType="submit" onClick={handleOkModify}>Submit</Button>]
                    }
             >
                 <StoryForm room={room} story={objectModify}/>
