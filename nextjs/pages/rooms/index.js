@@ -6,7 +6,7 @@ import RoomForm from "@/pages/rooms/form";
 import {useRouter} from "next/router";
 import {API_URL} from "@/services/HttpService";
 
-const App = ({rooms, suites, teams, users}) => {
+const App = ({rooms, suites, teams, user}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalDelete, setIsModalDelete] = useState(false);
@@ -72,7 +72,7 @@ const App = ({rooms, suites, teams, users}) => {
                         [<Button key="1" form="room" type="primary" htmlType="submit" onClick={handleOk}>Submit</Button>]
                     }
             >
-                <RoomForm suites={suites} teams={teams} users={users}/>
+                <RoomForm suites={suites} teams={teams} user={user}/>
             </Modal>
             <Modal title={"Supprimer une Room ?"} open={isModalDelete} onOk={handleOkDelete} onCancel={handleCancelDelete}
                    footer={
@@ -129,23 +129,15 @@ export async function getServerSideProps({req, res}) {
     });
     const resUsers = await fetch(API_URL+'users');
     const usersBase = await resUsers.json();
-    const users = await usersBase.map(user => {
-        return {
-            key : user.id,
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            completeName: user.completeName,
-        }
-    });
+    const userFilter = usersBase.filter(user => user.id === parseInt(req.cookies.id));
+    const user = userFilter[0];
 
     return {
         props: {
             rooms,
             suites,
             teams,
-            users,
+            user,
         },
     }
 }
