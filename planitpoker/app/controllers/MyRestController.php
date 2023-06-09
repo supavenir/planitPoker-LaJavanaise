@@ -90,8 +90,8 @@ class MyRestController extends \Ubiquity\controllers\rest\api\json\JsonRestContr
 		parent::add_($resource);
 	}
 
-    #[Post('user', priority: 0)]
-    public function addUser($resource) {
+    #[Post('user', priority: 3000)]
+    public function addUser() {
         TransformersManager::startProd('transform');
         parent::add_('user');
     }

@@ -2,7 +2,7 @@
 namespace controllers;
 
 use Ajax\php\ubiquity\JsUtils;
-use models\User_;
+use models\User;
 use Ubiquity\attributes\items\router\Get;
 use Ubiquity\attributes\items\router\Post;
 use Ubiquity\attributes\items\router\Route;
@@ -23,22 +23,22 @@ class UserController extends \controllers\ControllerBase {
     }
 
     public function index(){
-	    $users=DAO::getAll(User_::class);
+	    $users=DAO::getAll(User::class);
 		$this->jquery->renderView("UserController/index.html",compact('users'));
 	}
 
     public function one(int $id){
-        $user=DAO::getById(User_::class,$id);
+        $user=DAO::getById(User::class,$id);
         $this->loadDefaultView(compact('user'));
     }
     #[Get]
     public function add(){
-        $this->loadDefaultView(['user'=>new User_()]);
+        $this->loadDefaultView(['user'=>new User()]);
     }
 
     #[Post]
     public function submitAdd(){
-        $user=new User_();
+        $user=new User();
         URequest::setValuesToObject($user);
         $user->setPassword(URequest::password_hash('password'));
         if(!DAO::insert($user)){
@@ -48,14 +48,14 @@ class UserController extends \controllers\ControllerBase {
     }
 
     public function remove(int $id){
-        if(DAO::deleteById(User_::class,$id)!=1){
+        if(DAO::deleteById(User::class,$id)!=1){
             echo "<div class='ui error message'>Erreur !</div>";
         }
         $this->index();
     }
 
     public function edit(int $id){
-        $user=DAO::getById(User_::class,$id);
+        $user=DAO::getById(User::class,$id);
         $this->loadView("UserController/add.html",compact('user'));
     }
 

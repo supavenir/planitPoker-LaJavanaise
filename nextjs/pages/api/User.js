@@ -6,7 +6,7 @@ export default class UserService{
     }*/
 
     static add(user){
-        return HttpService.post('users', user);
+        return HttpService.postUser('user', user);
     }
 
     static update(story) {
