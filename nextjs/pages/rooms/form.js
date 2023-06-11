@@ -2,6 +2,7 @@ import {Button, Form, Input, Select} from 'antd';
 import RoomService from "@/pages/api/Room";
 import {useRouter} from "next/router";
 import {API_URL} from "@/services/HttpService";
+import React from 'react';
 
 const onFinish = async (values) => {
     await RoomService.add(values);
@@ -13,8 +14,18 @@ const handleChange = (value) => {
     console.log(`selected ${value}`);
 };
 
-const RoomForm = ({suites, teams, users}) => {
+const RoomForm = ({suites, teams, user}) => {
     const router = useRouter();
+    const formRef = React.useRef(null);
+
+    formRef.current?.setFieldsValue({
+        name: "",
+        description: "",
+        points: "",
+        suite: "",
+        team: "",
+        user: user.id,
+    });
     const onFinish = async (values) => {
         await RoomService.add(values);
         await router.push('/rooms');
@@ -28,6 +39,7 @@ const RoomForm = ({suites, teams, users}) => {
 
     return (
         <Form
+            ref={formRef}
             name="room"
             labelCol={{span: 8,}}
             wrapperCol={{span: 16,}}
@@ -88,19 +100,11 @@ const RoomForm = ({suites, teams, users}) => {
                 </Select>
             </Form.Item>
 
-            <Form.Item label="Propriétaire" name="user"
-                       rules={[
-                           {
-                               required: true,
-                               message: 'Ajouter un propriétaire.',
-                           },
-                       ]}
+            <Form.Item
+                name='user'
+                initialValue={user.id} hidden
             >
-                <Select placeholder="Nom du propriétaire." onChange={handleChange}>
-                    {users.map((user) => (
-                        <Select.Option key={user.key} value={user.id}>{user.username}</Select.Option>
-                    ))}
-                </Select>
+                <Input/>
             </Form.Item>
         </Form>
     );
@@ -129,24 +133,19 @@ export async function getStaticProps(context) {
             user: team.user,
         }
     });
-    const resUsers = await fetch(API_URL+'users');
-    const usersBase = await resUsers.json();
-    const users = await usersBase.map(user => {
-        return {
-            key : user.id,
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            password: user.password,
-            completeName: user.completeName,
-        }
-    });
+    const user = {
+        id: "",
+        username: "",
+        email: "",
+        password: "",
+        completeName: "",
+    }
 
     return {
         props: {
             suites,
             teams,
-            users,
+            user,
         },
     }
 }

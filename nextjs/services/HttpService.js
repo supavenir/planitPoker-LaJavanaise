@@ -13,6 +13,17 @@ class HttpService {
         });
     }*/
 
+    static async postUser(url, data) {
+        if (url === 'user') {
+            return fetch(API_URL + url, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            }).then(response => {
+                return response.json();
+            });
+        }
+    }
+
     static async post(url, data) {
         return fetch(API_URL + url, {
             method: 'POST',
